@@ -40,16 +40,32 @@ Progress (collection, best score, daily streak, playtime) is saved in the browse
 ## Deploy to Vercel
 
 The repo is a static site: [`vercel.json`](vercel.json) only turns on clean URLs, and
-`index.html` is served from the project root.
+`index.html` is served from the project root — no framework, build command or output
+directory needed.
 
-One-click: open <https://vercel.com/new/clone?repository-url=https://github.com/jayjaybeeuk/ellison-game>.
+### Automatic deploys (GitHub Actions)
 
-From the CLI:
+[`.github/workflows/deploy-vercel.yml`](.github/workflows/deploy-vercel.yml) deploys to
+production on every push to `main` (and can be run manually from the Actions tab). It
+needs three repository secrets under **Settings → Secrets and variables → Actions**:
+
+| Secret | Where it comes from |
+| --- | --- |
+| `VERCEL_TOKEN` | <https://vercel.com/account/tokens> — create a token, scope it to this project if you like |
+| `VERCEL_ORG_ID` | The `orgId` in `.vercel/project.json`, or the team/account ID in the Vercel dashboard |
+| `VERCEL_PROJECT_ID` | The `projectId` in `.vercel/project.json`, or Project Settings → General |
+
+The Vercel project has to exist before the first run. If the repo is connected through
+Vercel's Git integration as well, turn automatic Git deploys off for the project so the
+two don't both deploy on every push.
+
+### Manual deploy
+
+One-click import: <https://vercel.com/new/clone?repository-url=https://github.com/jayjaybeeuk/ellison-game>.
+
+Or from the CLI:
 
 ```bash
 npx vercel        # preview deployment
 npx vercel --prod # production deployment
 ```
-
-Or import the GitHub repo at <https://vercel.com/new> and use the defaults — no
-framework, no build command, no output directory needed.
