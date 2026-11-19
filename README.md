@@ -21,6 +21,7 @@ npx serve .
 | --- | --- | --- |
 | Move | `←` / `→` | Drag anywhere, tap, or hold the ◀ ▶ buttons |
 | Hit the boss | `Space` | `HIT` button, or tap the boss |
+| Full screen | — | The `⛶` button in the top-right corner of the board (`✕` to exit) |
 
 ## What's in it
 
@@ -43,21 +44,16 @@ The repo is a static site: [`vercel.json`](vercel.json) only turns on clean URLs
 `index.html` is served from the project root — no framework, build command or output
 directory needed.
 
-### Automatic deploys (GitHub Actions)
+### Automatic deploys
 
-[`.github/workflows/deploy-vercel.yml`](.github/workflows/deploy-vercel.yml) deploys to
-production on every push to `main` (and can be run manually from the Actions tab). It
-needs three repository secrets under **Settings → Secrets and variables → Actions**:
+The Vercel project is connected to this GitHub repo, so every push to `main` deploys to
+production (and other branches get preview deployments). Nothing needs to be stored in
+GitHub — Vercel holds the Git connection itself.
 
-| Secret | Where it comes from |
-| --- | --- |
-| `VERCEL_TOKEN` | <https://vercel.com/account/tokens> — create a token, scope it to this project if you like |
-| `VERCEL_ORG_ID` | The `orgId` in `.vercel/project.json`, or the team/account ID in the Vercel dashboard |
-| `VERCEL_PROJECT_ID` | The `projectId` in `.vercel/project.json`, or Project Settings → General |
-
-The Vercel project has to exist before the first run. If the repo is connected through
-Vercel's Git integration as well, turn automatic Git deploys off for the project so the
-two don't both deploy on every push.
+To deploy from a CI pipeline instead, use Vercel's documented flow —
+`vercel pull --yes --environment=production`, `vercel build --prod`, then
+`vercel deploy --prebuilt --prod` — with `VERCEL_TOKEN`, `VERCEL_ORG_ID` and
+`VERCEL_PROJECT_ID` supplied as secrets.
 
 ### Manual deploy
 
