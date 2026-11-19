@@ -25,7 +25,10 @@ body.fs #fsHud{display:block}
 @keyframes spin{0%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.2)}100%{transform:rotate(-10deg) scale(1)}}
 @keyframes spin2{0%{transform:rotate(-15deg) scale(1)}50%{transform:rotate(15deg) scale(1.4)}100%{transform:rotate(-15deg) scale(1)}}
 @keyframes rainbow{0%{filter:hue-rotate(0deg) drop-shadow(0 0 10px red)}25%{filter:hue-rotate(90deg) drop-shadow(0 0 10px orange)}50%{filter:hue-rotate(180deg) drop-shadow(0 0 10px green)}75%{filter:hue-rotate(270deg) drop-shadow(0 0 10px blue)}100%{filter:hue-rotate(360deg) drop-shadow(0 0 10px purple)}}
-.boss{position:absolute;top:5px;left:120px;font-size:60px}
+.boss{position:absolute;top:2px;left:0;right:0;text-align:center;font-size:78px;line-height:1.05;z-index:6;animation:bossFloat 1.1s infinite alternate ease-in-out}
+@keyframes bossFloat{0%{transform:scale(1) rotate(-4deg) translateY(0);filter:drop-shadow(0 0 6px red)}100%{transform:scale(1.14) rotate(4deg) translateY(4px);filter:drop-shadow(0 0 18px red)}}
+#bossWarn{position:absolute;top:150px;left:0;right:0;text-align:center;font-size:30px;font-weight:bold;color:#ff1a1a;text-shadow:0 0 8px #ff0000,0 0 20px #ff0000,0 0 34px #8b0000;z-index:8;pointer-events:none;display:none;animation:bossWarnPulse 0.45s infinite}
+@keyframes bossWarnPulse{0%{transform:scale(1);opacity:0.5}50%{transform:scale(1.18);opacity:1}100%{transform:scale(1);opacity:0.5}}
 button{padding:12px 22px;font-size:18px;border-radius:10px;background:#ff9f43;border:none;margin:5px;cursor:pointer;touch-action:manipulation}
 .overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:#fff8e1;z-index:10;padding:15px;box-sizing:border-box;overflow-y:auto;text-align:left;font-size:14px;line-height:1.5;touch-action:pan-y}
 #win{display:none;background:#d4ffcf;text-align:center}
@@ -304,7 +307,7 @@ button{padding:12px 22px;font-size:18px;border-radius:10px;background:#ff9f43;bo
 </div>
 </div>
 
-<div id="player">🐦‍⬛</div><div id="boss" style="display:none">😈🐦‍⬛</div>
+<div id="player">🐦‍⬛</div><div id="boss" class="boss" style="display:none">😈🐦‍⬛</div><div id="bossWarn">BOSS INCOMING!</div>
 <div id="fsHud"></div>
 <button id="fsBtn" onclick="toggleFullscreen(event)" title="Full screen">⛶</button>
 </div>
@@ -770,7 +773,7 @@ function hideLore(){ playPage(); document.getElementById('lorebook').style.displ
 function showIndex(){ playPage(); renderIndex(); document.getElementById('story').style.display='none'; document.getElementById('rules').style.display='none'; document.getElementById('lorebook').style.display='none'; document.getElementById('rewards').style.display='none'; document.getElementById('stage2Intro').style.display='none'; document.getElementById('gameover').style.display='none'; document.getElementById('index').style.display='block'; }
 function hideIndex(){ playPage(); document.getElementById('index').style.display='none'; document.getElementById('story').style.display='block'; }
 function showGameOver(reason){
-  playing=false; playGameOver(); playEvilLaugh(); boss.style.display='none'; game.classList.remove('stage2');
+  playing=false; playGameOver(); playEvilLaugh(); cancelBossWarn(); boss.style.display='none'; game.classList.remove('stage2');
   let isNewBest = checkBest(score);
   document.getElementById('gameoverReason').textContent = (isStage2 ? 'STAGE 2 - ' : 'STAGE 1 - ') + reason;
   document.getElementById('gameoverScore').textContent=score;
@@ -797,7 +800,7 @@ function backToMenu(){
   document.getElementById('rewards').style.display='none';
   document.getElementById('stage2Intro').style.display='none';
   document.getElementById('story').style.display='block';
-  playing=false; boss.style.display='none'; isStage2=false; game.classList.remove('stage2');
+  playing=false; cancelBossWarn(); boss.style.display='none'; isStage2=false; game.classList.remove('stage2');
   score=0; health=100; level=1; update(); updateBestDisplay();
   document.getElementById('msg').textContent='Gary: "Let\'s bake!" Kevin: "Wheee!"';
 }
@@ -864,13 +867,13 @@ function startGame(){initSound(); playCatch(); document.getElementById('story').
 function startStage2(){ if(!isStage2Unlocked()){ alert('Stage 2 locked! Catch ALL 41 original first! You have '+getOriginalCount()+'/41'); return; } initSound(); playKing(); document.getElementById('stage2Intro').style.display='none'; document.getElementById('gameover').style.display='none'; document.getElementById('win2').style.display='none'; startStage2Game(); }
 function startStage2Game(){
   isStage2=true; game.classList.add('stage2');
-  score=0;health=80;level=2;playing=true;bossHP=0;shieldUntil=0;magnetUntil=0; sessionPlaySeconds=0;
+  score=0;health=80;level=2;playing=true;bossHP=0;shieldUntil=0;magnetUntil=0; sessionPlaySeconds=0; cancelBossWarn();
   if(pendingBonus>0){ score+=pendingBonus; document.getElementById('msg').textContent='🎁 Bonus! +'+pendingBonus+' Points!'; pendingBonus=0; saveGame(); }
   else document.getElementById('msg').textContent='🔥 STAGE 2! ELEMENTAL STORM! Get to 1000! GO! Flavoured Breads help!';
   update();updatePlayerLook();spawn();
 }
 function start(){
-  score=0;health=100;level=1;playing=true;bossHP=0;shieldUntil=0;magnetUntil=0; sessionPlaySeconds=0; isStage2=false; game.classList.remove('stage2');
+  score=0;health=100;level=1;playing=true;bossHP=0;shieldUntil=0;magnetUntil=0; sessionPlaySeconds=0; isStage2=false; game.classList.remove('stage2'); cancelBossWarn();
   if(pendingBonus>0){ score+=pendingBonus; document.getElementById('msg').textContent='🎁 Daily + Playtime Bonus! +'+pendingBonus+' Points!'; pendingBonus=0; saveGame(); }
   else document.getElementById('msg').textContent='Stage 1! Get to 500! GO!';
   update();updatePlayerLook();spawn();
@@ -894,13 +897,30 @@ setInterval(()=>{
     checkPlaytimeAuto();
   }
 },1000);
+let bossWarnTimer=null;
+function cancelBossWarn(){
+ if(bossWarnTimer){ clearTimeout(bossWarnTimer); bossWarnTimer=null; }
+ let w=document.getElementById('bossWarn'); if(w) w.style.display='none';
+}
+function bossIncoming(hp, icon, text){
+ cancelBossWarn();
+ let w=document.getElementById('bossWarn'); if(w) w.style.display='block';
+ document.getElementById('msg').textContent='⚠️ BOSS INCOMING! Get ready!';
+ bossWarnTimer=setTimeout(()=>{
+   bossWarnTimer=null;
+   let w2=document.getElementById('bossWarn'); if(w2) w2.style.display='none';
+   if(!playing) return;
+   bossHP=hp; boss.textContent=icon; boss.style.display='block';
+   document.getElementById('msg').textContent=text;
+ }, 2000);
+}
 function spawn(){
  if(!playing) return;
  if(!isStage2 && score>=500 && level===1){
-   level=2;update();bossHP=10;boss.textContent='😈🐦‍⬛';boss.style.display='block';document.getElementById('msg').textContent='😈 BOSS! EVIL PIGEON! Tap / SPACE / HIT! HP: 10';
+   level=2;update();bossIncoming(10,'😈🐦‍⬛','😈 BOSS! EVIL PIGEON! Tap / SPACE / HIT! HP: 10');
  }
  if(isStage2 && score>=1000 && bossHP===0 && level===2){
-   level=3;update();bossHP=25;boss.textContent='😈👑🐦‍⬛';boss.style.display='block';document.getElementById('msg').textContent='😈👑 FINAL BOSS! DARK KING PIGEON! Tap / SPACE / HIT! HP: 25';
+   level=3;update();bossIncoming(25,'😈👑🐦‍⬛','😈👑 FINAL BOSS! DARK KING PIGEON! Tap / SPACE / HIT! HP: 25');
  }
  let r=Math.random(); let el=document.createElement('div'); el.className='item'; let type='flour',pts=10, isDark=false, darkName='', collectId='flour', isElemental=false, elemName='', isFlavoured=false, flavName='';
  let elemChance = isStage2 ? 0.5 : 0.08;
