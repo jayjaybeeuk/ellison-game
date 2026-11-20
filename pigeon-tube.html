@@ -11,25 +11,27 @@ h1{margin:0;font-size:30px}.stats{display:flex;justify-content:center;gap:6px;fl
 button{border:0;border-radius:14px;padding:12px;width:100%;font-size:16px;font-weight:bold;margin:5px 0;cursor:pointer}
 button:active{transform:scale(.97)}.yellow{background:#ffd700}.pink{background:#ff6b9d;color:#fff}.red{background:#ff3b30;color:#fff}.purple{background:#8e44ad;color:#fff}.green{background:#2ecc71;color:#fff}.blue{background:#3498db;color:#fff}.gold{background:#ffaa00}.orange{background:#ff7f00;color:#fff}.grey{background:#ddd}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.small{font-size:12px;color:#555}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:2px solid #eee;z-index:20}
-.nav button{width:auto;background:none;font-size:12px;padding:4px}.nav button.on{color:#3498db}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;border-top:2px solid #eee;z-index:20}
+.nav button{width:auto;background:none;font-size:13px;padding:6px 3px;min-height:46px;line-height:1.35}.nav button.on{color:#3498db}
 #toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:20px;z-index:99;display:none;font-weight:bold;max-width:90%;text-align:center}
 input{width:100%;padding:12px;border-radius:12px;border:2px solid #ddd;font-size:16px;margin:6px 0}
 .bar{background:#ddd;border-radius:8px;height:12px;overflow:hidden}.bar>div{background:#ffd700;height:100%}
 #breadBanner{position:sticky;top:var(--topH,110px);z-index:15;padding:0 10px}
-#tdGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;background:linear-gradient(135deg,#58C14E,#2E8B57);border:4px solid #2d5016;border-radius:20px;padding:10px;max-width:420px;margin:0 auto}
-#tdGrid button{aspect-ratio:1;border-radius:10px;font-size:9px;font-weight:700;line-height:1.05;padding:0;min-width:0;max-width:100%;overflow:hidden;word-break:break-word;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+#towerdefense{padding:4px}
+#towerdefense .card{padding:10px 2px}
+#tdGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;background:linear-gradient(135deg,#58C14E,#2E8B57);border:2px solid #2d5016;border-radius:16px;padding:4px;max-width:430px;margin:0 auto}
+#tdGrid button{aspect-ratio:1;border-radius:8px;font-size:10px;font-weight:900;line-height:1.05;padding:0;min-width:0;max-width:100%;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
 #tdGrid button>div{max-width:100%}
-#tdGrid button>div:first-child{font-size:7px!important;line-height:1}
-#tdGrid button>div:last-child{font-size:7px!important;padding:0 2px}
+#tdGrid button .td-tname{font-weight:900;line-height:1.02}
+#tdGrid button .td-lvl{font-size:9px;background:#8B4513;color:#fff;border-radius:6px;padding:0 3px;line-height:1.25;margin-top:1px}
 #tdTowerBtns{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 #tdTowerBtns button{padding:10px 3px;font-size:11px;line-height:1.15;min-width:0;overflow-wrap:anywhere;word-break:break-word}
 #tdTowerBtns button small{font-size:10px;display:block;line-height:1.2}
-.td-grass{background:linear-gradient(135deg,#5EDB5E,#4CAF50)!important;border:2px solid #2d5016!important}
-.td-path{background:linear-gradient(135deg,#CD853F,#8B4513)!important;border:3px solid #5D3A1A!important}
-.td-tower{background:linear-gradient(180deg,#fff,#FFD700,#ff8800)!important;border:2px solid #fff!important;box-shadow:0 0 15px rgba(255,215,0,.9)!important}
-.td-pigeon{box-shadow:0 0 25px #FFD700,0 0 40px #FF00FF!important;border:3px solid #FFD700!important}
-.td-boss{box-shadow:0 0 25px #f00!important;border:3px solid #f00!important}
+.td-grass{background:linear-gradient(135deg,#5EDB5E,#4CAF50)!important;border:1px solid #2d5016!important}
+.td-path{background:linear-gradient(135deg,#CD853F,#8B4513)!important;border:2px solid #5D3A1A!important}
+.td-tower{background:linear-gradient(180deg,#fff,#FFD700,#ff8800)!important;border:1px solid #fff!important;box-shadow:0 0 15px rgba(255,215,0,.9)!important}
+.td-pigeon{box-shadow:0 0 25px #FFD700,0 0 40px #FF00FF!important;border:2px solid #FFD700!important}
+.td-boss{box-shadow:0 0 25px #f00!important;border:2px solid #f00!important}
 body.shader-neon{background:#111!important} body.shader-rainbow{background:linear-gradient(180deg,#FF00FF,#00FFFF)!important}
 body.shader-fire{background:linear-gradient(180deg,#FF4400,#f00)!important} body.shader-ice{background:linear-gradient(180deg,#87CEEB,#00BFFF)!important}
 body.shader-gold{background:linear-gradient(180deg,#FFD700,#FFFF00)!important} body.shader-dark{background:linear-gradient(180deg,#2A0A5E,#0f0a28)!important}
@@ -219,9 +221,21 @@ TD.path=[0,1,2,3,4,5,6,13,20,27,26,25,24,23,22,21,28,35,42,43,44,45,46,47,48];
 function tdWaveClearBonus(w){return Math.min(100*w+Math.floor(50*Math.sqrt(w)*100),50000)}
 function tdKillBonus(w,b){let x=20+w*2;if(b)x+=2000;return x}
 function tdEnemyHP(w){let m=w>500?1.01:w>200?1.02:1.08;return Math.floor((20+w*15)*Math.pow(m,w))}
+// Size tower-cell labels to the actual cell so they stay readable instead of breaking mid-word
+let _measCtx=null,_faceW=0,_faceCache={};
+function textW(t,px){if(!_measCtx)_measCtx=document.createElement('canvas').getContext('2d');_measCtx.font='900 '+px+'px Arial, sans-serif';return _measCtx.measureText(t).width}
+function towerFace(info,lim){
+  if(_faceW!==lim){_faceW=lim;_faceCache={}}
+  if(_faceCache[info.emoji])return _faceCache[info.emoji];
+  let t=info.emoji,out;
+  if(textW(t,10)<=lim)out=`<div class="td-tname" style="font-size:10px">${t}</div>`;
+  else if(textW(t,9)<=lim)out=`<div class="td-tname" style="font-size:9px">${t}</div>`;
+  else{let h=Math.ceil(t.length/2);out=`<div class="td-tname" style="font-size:10px">${t.slice(0,h)}<br>${t.slice(h)}</div>`}
+  return _faceCache[info.emoji]=out;
+}
 function tdRenderTowerBtns(){let c=document.getElementById('tdTowerBtns');if(!c)return;c.innerHTML='';Object.keys(TD_TOWERS).forEach(k=>{let t=TD_TOWERS[k];let b=document.createElement('button');b.innerHTML=`${t.emoji} ${t.name}<br><small>${t.cost.toLocaleString()} | ${t.dmg} dmg</small>`;b.style.background=t.color;b.style.color=t.dark?'#fff':'#111';b.onclick=()=>{TD.selected=k;let s=document.getElementById('tdSelected');if(s)s.innerText=t.name;showToast('Selected '+t.name)};c.appendChild(b)})}
 function tdPlaceTower(i){if(_tdBusy)return;_tdBusy=true;setTimeout(()=>{_tdBusy=false},150);if(TD.towers[i]){let tw=TD.towers[i];if(!tw||!TD_TOWERS[tw.type])return;if(tw.level>=5){showToast('MAX LEVEL!');return}let cost=TD_TOWERS[tw.type].cost*(tw.level+1);if(S.coins<cost){showToast('Need '+cost.toLocaleString()+'!');return}S.coins-=cost;tw.level++;showToast('Lv.'+tw.level+'!');save();tdRender();renderAll();return}if(!TD.selected){showToast('Pick a tower first!');return}if(TD.path.includes(i)){showToast('Cannot build on path!');return}let t=TD_TOWERS[TD.selected];if(!t)return;if(S.coins<t.cost){showToast('Need '+t.cost.toLocaleString()+' coins!');return}S.coins-=t.cost;TD.towers[i]={type:TD.selected,level:1};save();tdRender();renderAll();showToast(t.name+' placed!')}
-function tdRender(){let g=document.getElementById('tdGrid');if(!g)return;let savedEnemies=TD.enemies.slice();g.innerHTML='';for(let i=0;i<49;i++){let b=document.createElement('button');let isPath=TD.path.includes(i);let e=savedEnemies.find(x=>x.pos===i);if(TD.towers[i]){let info=TD_TOWERS[TD.towers[i].type];if(!info){b.className='td-grass';g.appendChild(b);continue}b.innerHTML=`<div style="background:#fff;border-radius:50%;width:22px;height:22px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:11px">${info.emoji}</div><div>TOWER</div><div style="font-size:8px;background:#8B4513;color:#fff;border-radius:6px">Lv.${TD.towers[i].level}</div>`;b.className='td-tower';b.style.background=info.color}else if(e){if(e.isPigeon){b.innerText='PIGEON BOSS';b.className='td-path td-pigeon'}else if(e.isBoss){b.innerText='BOSS';b.className='td-path td-boss'}else{b.innerText='ENEMY';b.className='td-path'}}else if(isPath){b.className='td-path'}else{b.innerText='GRASS';b.className='td-grass'}if(TD.raining)b.innerText+=' RAIN';b.onclick=()=>tdPlaceTower(i);g.appendChild(b)}let set=(id,v)=>{let e=document.getElementById(id);if(e)e.innerText=v};set('tdLives',TD.lives);set('tdWave',TD.wave);set('tdKills',TD.kills);set('tdGems',TD.gems);let mi=document.getElementById('tdMoneyInfo');if(mi)mi.innerText=`Wave ${TD.wave} bonus: ${tdWaveClearBonus(TD.wave).toLocaleString()} | Max: 50,000`;
+function tdRender(){let g=document.getElementById('tdGrid');if(!g)return;let savedEnemies=TD.enemies.slice();g.innerHTML='';let cellLim=Math.floor((g.clientWidth-8-12)/7)-3;for(let i=0;i<49;i++){let b=document.createElement('button');let isPath=TD.path.includes(i);let e=savedEnemies.find(x=>x.pos===i);if(TD.towers[i]){let info=TD_TOWERS[TD.towers[i].type];if(!info){b.className='td-grass';g.appendChild(b);continue}b.innerHTML=towerFace(info,cellLim)+`<div class="td-lvl">Lv.${TD.towers[i].level}</div>`;b.className='td-tower';b.style.background=info.color}else if(e){if(e.isPigeon){b.innerHTML='<div class="td-tname" style="font-size:9px">PIGEON<br>BOSS</div>';b.className='td-path td-pigeon'}else if(e.isBoss){b.innerText='BOSS';b.className='td-path td-boss'}else{b.innerText='ENEMY';b.className='td-path'}}else if(isPath){b.className='td-path'}else{b.innerText='GRASS';b.className='td-grass'}if(TD.raining)b.innerText+=' RAIN';b.onclick=()=>tdPlaceTower(i);g.appendChild(b)}let set=(id,v)=>{let e=document.getElementById(id);if(e)e.innerText=v};set('tdLives',TD.lives);set('tdWave',TD.wave);set('tdKills',TD.kills);set('tdGems',TD.gems);let mi=document.getElementById('tdMoneyInfo');if(mi)mi.innerText=`Wave ${TD.wave} bonus: ${tdWaveClearBonus(TD.wave).toLocaleString()} | Max: 50,000`;
 // V13 FIX: GO WAVE must ALWAYS re-enable when not playing
 let gw=document.getElementById('goWaveBtn');if(gw){let canGo=!TD.playing&&!_waveBusy;gw.disabled=!canGo;gw.style.opacity=canGo?1:0.5;gw.innerText=TD.playing?'WAVE RUNNING...':'GO WAVE!'}
 let nw2=document.getElementById('nextWaveBtn2');if(nw2){nw2.style.display=(!TD.playing&&TD.wave>1&&!_nextPopupShown)?'block':'none';nw2.innerText=`NEXT WAVE ${TD.wave}!`}
