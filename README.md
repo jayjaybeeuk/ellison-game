@@ -1,19 +1,27 @@
-# Ellison Game — Chef Pigeon 2
+# Ellison Game
 
-A single-file browser game. Chef Pigeon is baking the biggest bread in the sky when
-Evil Pigeon curses the food — catch the good bread, dodge the dark bread and eggs, and
-save Bread Day.
+A tiny arcade of single-file browser games. [`index.html`](index.html) is the menu:
 
-Everything (HTML, CSS, JavaScript, sounds) lives in [`index.html`](index.html). There is
-no build step, no dependencies and no backend.
+| Game | File |
+| --- | --- |
+| 🐦‍⬛ **Chef Pigeon 2** | [`chef-pigeon-2.html`](chef-pigeon-2.html) |
+| 🐦 **Pigeon Tube** | [`pigeon-tube.html`](pigeon-tube.html) |
+
+Every game is one self-contained HTML file — no build step, no dependencies and no
+backend.
 
 ## Play
 
-Open `index.html` in any modern browser, or serve the folder:
+Open `index.html` in any modern browser and pick a game, or serve the folder:
 
 ```bash
 npx serve .
 ```
+
+### 🐦‍⬛ Chef Pigeon 2
+
+Chef Pigeon is baking the biggest bread in the sky when Evil Pigeon curses the food —
+catch the good bread, dodge the dark bread and eggs, and save Bread Day.
 
 ## Controls
 
@@ -38,11 +46,18 @@ npx serve .
 Progress (collection, best score, daily streak, playtime) is saved in the browser's
 `localStorage`, so it stays with that browser and is not synced between devices.
 
+### 🐦 Pigeon Tube
+
+Grow a pigeon YouTube channel: post videos, release songs, run the tower defense (the
+Pigeon Boss arrives at wave 750), buy shaders and prestige. Progress is saved in
+`localStorage`.
+
 ## Deploy to Vercel
 
-The repo is a static site: [`vercel.json`](vercel.json) only turns on clean URLs, and
-`index.html` is served from the project root — no framework, build command or output
-directory needed.
+The repo is a static site: [`vercel.json`](vercel.json) only turns on clean URLs, and the
+HTML files are served from the project root — no framework, build command or output
+directory needed. With clean URLs on, the menu is `/`, the games are `/chef-pigeon-2`
+and `/pigeon-tube`.
 
 ### Automatic deploys
 
