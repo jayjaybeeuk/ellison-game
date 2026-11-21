@@ -6,6 +6,7 @@ A tiny arcade of single-file browser games. [`index.html`](index.html) is the me
 | --- | --- |
 | 🐦‍⬛ **Chef Pigeon 2** | [`chef-pigeon-2.html`](chef-pigeon-2.html) |
 | 🐦 **Pigeon Tube** | [`pigeon-tube.html`](pigeon-tube.html) |
+| 🐦 **Dad Attack** | [`dad-attack.html`](dad-attack.html) |
 
 Every game is one self-contained HTML file — no build step, no dependencies and no
 backend.
@@ -53,12 +54,19 @@ to them), visit rival bread shops to buy their stock, copy their recipes and cha
 them on the bread leaderboard, run the tower defense (the Pigeon Boss arrives at wave
 750), buy shaders and prestige. Progress is saved in `localStorage`.
 
+### 🐦 Dad Attack
+
+An angry dad is loose in the arena and he is getting faster. Steer the pigeon
+with the mouse or a finger, stay out of reach and grab bonuses: ⭐ +25 points,
+⚡ a speed burst, 🛡 a shield that survives one catch and ❄ a short freeze for
+dad. Score is survival time plus stars, and your best is saved in `localStorage`.
+
 ## Deploy to Vercel
 
 The repo is a static site: [`vercel.json`](vercel.json) only turns on clean URLs, and the
 HTML files are served from the project root — no framework, build command or output
-directory needed. With clean URLs on, the menu is `/`, the games are `/chef-pigeon-2`
-and `/pigeon-tube`.
+directory needed. With clean URLs on, the menu is `/`, the games are `/chef-pigeon-2`,
+`/pigeon-tube` and `/dad-attack`.
 
 ### Automatic deploys
 
