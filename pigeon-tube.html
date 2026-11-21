@@ -6,6 +6,7 @@
 .top{background:#fff;border-radius:0 0 20px 20px;padding:12px;text-align:center;position:sticky;top:0;z-index:10;box-shadow:0 4px 10px #0003}
 h1{margin:0;font-size:30px}.stats{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:6px}
 .pill{background:#eee;border-radius:20px;padding:5px 10px;font-weight:bold;font-size:13px}
+@media (max-width:430px){.top{padding:7px 6px 6px;border-radius:0 0 14px 14px}.top h1{font-size:19px}.stats{gap:4px;margin-top:4px}.pill{font-size:11px;padding:3px 7px;border-radius:14px}}
 .screen{display:none;padding:12px;max-width:560px;margin:auto}.screen.active{display:block}
 .card{background:#fff;border-radius:16px;padding:14px;margin:10px 0;box-shadow:0 3px 8px #0002}
 button{border:0;border-radius:14px;padding:12px;width:100%;font-size:16px;font-weight:bold;margin:5px 0;cursor:pointer}
@@ -15,7 +16,7 @@ button:active{transform:scale(.97)}.yellow{background:#ffd700}.pink{background:#
 .nav button{width:auto;background:none;font-size:13px;padding:6px 1px;min-height:46px;min-width:44px;line-height:1.35}
 .nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;background:none;color:#000;text-decoration:none;font-size:13px;font-weight:bold;padding:6px 1px;min-height:46px;min-width:44px;line-height:1.35;border-radius:14px}
 .nav a:active{transform:scale(.97)}.nav button.on{color:#3498db}
-#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:20px;z-index:99;display:none;font-weight:bold;max-width:90%;text-align:center}
+#toast{position:fixed;top:calc(var(--topH,110px) + 8px);left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:20px;z-index:99;display:none;font-weight:bold;max-width:90%;text-align:center}
 input{width:100%;padding:12px;border-radius:12px;border:2px solid #ddd;font-size:16px;margin:6px 0}
 .bar{background:#ddd;border-radius:8px;height:12px;overflow:hidden}.bar>div{background:#ffd700;height:100%}
 #breadBanner{position:sticky;top:var(--topH,110px);z-index:15;padding:0 10px}
