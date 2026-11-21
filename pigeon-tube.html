@@ -11,12 +11,14 @@ h1{margin:0;font-size:30px}.stats{display:flex;justify-content:center;gap:6px;fl
 button{border:0;border-radius:14px;padding:12px;width:100%;font-size:16px;font-weight:bold;margin:5px 0;cursor:pointer}
 button:active{transform:scale(.97)}.yellow{background:#ffd700}.pink{background:#ff6b9d;color:#fff}.red{background:#ff3b30;color:#fff}.purple{background:#8e44ad;color:#fff}.green{background:#2ecc71;color:#fff}.blue{background:#3498db;color:#fff}.gold{background:#ffaa00}.orange{background:#ff7f00;color:#fff}.grey{background:#ddd}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.small{font-size:12px;color:#555}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-top:2px solid #eee;z-index:20}
-.nav button{width:auto;background:none;font-size:12px;padding:4px}.nav button.on{color:#3498db}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;border-top:2px solid #eee;z-index:20}
+.nav button{width:auto;background:none;font-size:13px;padding:6px 1px;min-height:46px;min-width:44px;line-height:1.35}
+.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;background:none;color:#000;text-decoration:none;font-size:13px;font-weight:bold;padding:6px 1px;min-height:46px;min-width:44px;line-height:1.35;border-radius:14px}
+.nav a:active{transform:scale(.97)}.nav button.on{color:#3498db}
 #toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:20px;z-index:99;display:none;font-weight:bold;max-width:90%;text-align:center}
 input{width:100%;padding:12px;border-radius:12px;border:2px solid #ddd;font-size:16px;margin:6px 0}
 .bar{background:#ddd;border-radius:8px;height:12px;overflow:hidden}.bar>div{background:#ffd700;height:100%}
-#breadBanner{position:sticky;top:110px;z-index:15;padding:0 10px}
+#breadBanner{position:sticky;top:var(--topH,110px);z-index:15;padding:0 10px}
 #towerdefense{padding:4px}
 #towerdefense .card{padding:10px 2px}
 #tdGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;background:linear-gradient(135deg,#58C14E,#2E8B57);border:2px solid #2d5016;border-radius:16px;padding:4px;max-width:430px;margin:0 auto}
@@ -122,7 +124,7 @@ body.shader-gold{background:linear-gradient(180deg,#FFD700,#FFFF00)!important} b
 <!-- V21 RIVAL SHOPS - VISIT THEM! -->
 <div id="rivalshops" class="screen"><div class="card"><h2 style="text-align:center">🏪 VISIT RIVAL SHOPS!</h2><p style="text-align:center">Walk into their shop! See their bread! Buy from them! Steal secrets!</p><div id="rivalShopsList"></div></div><div class="card" id="rivalShopDetail" style="display:none"><h2 id="rivalShopTitle">Shop</h2><div id="rivalShopBody"></div><button class="grey" onclick="closeRivalShop()">⬅️ BACK TO ALL SHOPS</button></div></div>
 
-<div class="nav"><button class="on" onclick="showScreen('home',this)">🏠<br>HOME</button><button onclick="showScreen('video',this)">🎬<br>WATCH</button><button onclick="showScreen('towerdefense',this)">🏰<br>TOWER</button><button onclick="showScreen('breadshop',this)">🍞<br>BREAD</button><button onclick="showScreen('rivalshops',this)">🏪<br>RIVALS</button><button onclick="showScreen('profile',this)">🐦<br>PROFILE</button></div>
+<div class="nav"><button class="on" onclick="showScreen('home',this)">🏠<br>HOME</button><button onclick="showScreen('video',this)">🎬<br>WATCH</button><button onclick="showScreen('towerdefense',this)">🏰<br>TOWER</button><button onclick="showScreen('breadshop',this)">🍞<br>BREAD</button><button onclick="showScreen('rivalshops',this)">🏪<br>RIVALS</button><a href="index.html" title="Back to the arcade menu">⬅️<br>MENU</a><button onclick="showScreen('profile',this)">🐦<br>PROFILE</button></div>
 
 <script>
 let S={}; try{S=JSON.parse(localStorage.getItem('pigeontube_mega')||'{}')||{}}catch(e){S={}}
@@ -230,7 +232,7 @@ function tdStartRain(){if(TD.raining)return;TD.raining=true;showToast('RAIN!');t
 function toggleRain(){TD.raining=!TD.raining;tdRender();showToast(TD.raining?'Rain ON!':'Rain OFF!')}
 function tdDropBossChest(isPigeon){_chestOpen=false;let amt=isPigeon?100000:20000;if(S.prestigeItems?.doubleCoins)amt*=2;amt*=completionCoinMult();let c=document.createElement('div');c.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#FFD700;color:#000;font-size:22px;font-weight:900;text-align:center;padding:25px;border-radius:20px;border:5px solid #8B4513;box-shadow:0 0 50px #FFD700;z-index:999;cursor:pointer';c.innerHTML=`BOSS CHEST!<br><span style="font-size:16px">+${amt.toLocaleString()} coins!</span><br><span style="font-size:13px">TAP TO OPEN!</span>`;c.onclick=()=>{if(_chestOpen)return;_chestOpen=true;S.coins+=amt;save();renderAll();showToast('+'+amt.toLocaleString()+' from chest!');playDing();c.remove()};document.body.appendChild(c);setTimeout(()=>{if(document.body.contains(c))c.click()},5000)}
 function showPigeonPopup(){let p=document.createElement('div');p.style.cssText='position:fixed;top:30%;left:50%;transform:translate(-50%,-50%);background:#FFD700;color:#000;font-size:28px;font-weight:900;text-align:center;padding:25px;border-radius:20px;border:5px solid #000;z-index:999';p.innerHTML=`PIGEON BOSS!!!<br><span style="font-size:18px">MEGA PIGEON KING!<br>WAVE 750!</span>`;document.body.appendChild(p);setTimeout(()=>p.remove(),3000)}
-function showNextWavePopup(clearedWave, bonus){let pop=document.getElementById('nextWavePopup');if(!pop)return;_nextPopupShown=true;document.getElementById('nextWaveNum').innerText=clearedWave;document.getElementById('nextWaveBtnNum').innerText=TD.wave;document.getElementById('nextWaveReward').innerText=`+${bonus.toLocaleString()} coins! Ready for Wave ${TD.wave}?`;pop.style.display='block';requestAnimationFrame(()=>{pop.classList.add('show');pop.classList.remove('hide')});if(navigator.vibrate)navigator.vibrate([100,50,100]);showToast(`WAVE ${clearedWave} CLEARED! Tap NEXT WAVE!`);if(_nextPopupTimer)clearTimeout(_nextPopupTimer);_nextPopupTimer=setTimeout(()=>{hideNextWavePopup()},10000)}
+function showNextWavePopup(clearedWave, bonus){let pop=document.getElementById('nextWavePopup');if(!pop)return;_nextPopupShown=true;document.getElementById('nextWaveNum').innerText=clearedWave;document.getElementById('nextWaveBtnNum').innerText=TD.wave;document.getElementById('nextWaveReward').innerText=`+${bonus.toLocaleString()} coins! Ready for Wave ${TD.wave}?`;pop.style.display='block';pop.classList.remove('show','hide');void pop.offsetWidth;pop.classList.add('show');if(navigator.vibrate)navigator.vibrate([100,50,100]);showToast(`WAVE ${clearedWave} CLEARED! Tap NEXT WAVE!`);if(_nextPopupTimer)clearTimeout(_nextPopupTimer);_nextPopupTimer=setTimeout(()=>{hideNextWavePopup()},10000)}
 function hideNextWavePopup(){let pop=document.getElementById('nextWavePopup');if(!pop)return;pop.classList.add('hide');pop.classList.remove('show');_nextPopupShown=false;setTimeout(()=>{if(!_nextPopupShown)pop.style.display='none'},500);tdRender()}
 function nextWaveGo(){let pop=document.getElementById('nextWavePopup');if(pop){pop.classList.add('hide');pop.classList.remove('show');setTimeout(()=>{pop.style.display='none'},450)}_nextPopupShown=false;if(_nextPopupTimer){clearTimeout(_nextPopupTimer);_nextPopupTimer=null}tdStartWave()}
 function forceNextWave(){if(TD.interval){clearInterval(TD.interval);TD.interval=null}TD.playing=false;TD.enemies=[];TD.raining=false;hideNextWavePopup();showToast('Force fixed! Starting Wave '+TD.wave);setTimeout(()=>tdStartWave(),300)}
@@ -371,6 +373,11 @@ function copyRivalRecipe(idx){
 }
 setInterval(()=>{ if(BREAD.workers>0){ BREAD.bread+=BREAD.workers; BREAD.totalBaked+=BREAD.workers; saveBread(); if(document.getElementById('breadshop')?.classList.contains('active')) renderBreadShop(); } },3000);
 setInterval(()=>{ if(Math.random()<0.6){ BREAD.customers++; if(BREAD.bread>0&&Math.random()<0.5){ BREAD.bread--; BREAD.totalSold++; BREAD.soldToday++; let earn=breadPrice(); S.coins+=earn; BREAD.totalEarned+=earn; } saveBread(); save(); if(document.getElementById('breadshop')?.classList.contains('active')) renderBreadShop(); } },15000);
+// Keep the golden-bread banner below the sticky stats header, whatever height it wraps to on small screens
+function syncTopOffset(){let t=document.querySelector('.top');if(!t)return;document.documentElement.style.setProperty('--topH',Math.round(t.offsetHeight)+'px')}
+window.addEventListener('resize',syncTopOffset);window.addEventListener('orientationchange',syncTopOffset);
+if(window.ResizeObserver){let topEl=document.querySelector('.top');if(topEl)new ResizeObserver(syncTopOffset).observe(topEl)}
+syncTopOffset();setTimeout(syncTopOffset,400);
 clampSave();if(activeShader!=='none'&&ownedShaders.includes(activeShader)&&SHADERS[activeShader])setShaderClass(SHADERS[activeShader].css);
 initQuests();renderVideoTypes();renderMusicTypes();renderBattle();tdRenderTowerBtns();tdRender();renderShaderShop();renderAchievements();renderAll();renderCompletion();renderBreadShop();renderBreadLeaderboard();renderHomeLeaderboard();renderRivalShops();
 if(!_autoStarted){_autoStarted=true;setInterval(()=>{if(!S.prestigeItems?.autoUpload)return;let now=Date.now();if(now-_lastAutoVideo<55000)return;if(isTyping())return;_lastAutoVideo=now;makeVideo();showToast('Auto-Upload!')},60000)}
