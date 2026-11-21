@@ -48,9 +48,10 @@ Progress (collection, best score, daily streak, playtime) is saved in the browse
 
 ### 🐦 Pigeon Tube
 
-Grow a pigeon YouTube channel: post videos, release songs, run the tower defense (the
-Pigeon Boss arrives at wave 750), buy shaders and prestige. Progress is saved in
-`localStorage`.
+Grow a pigeon YouTube channel: post videos (then watch them), release songs (then listen
+to them), visit rival bread shops to buy their stock, copy their recipes and challenge
+them on the bread leaderboard, run the tower defense (the Pigeon Boss arrives at wave
+750), buy shaders and prestige. Progress is saved in `localStorage`.
 
 ## Deploy to Vercel
 
