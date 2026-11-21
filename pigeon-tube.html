@@ -5,6 +5,7 @@
 *{box-sizing:border-box}body{margin:0;background:#87ceeb;font-family:Arial,sans-serif;padding-bottom:110px}
 .top{background:#fff;border-radius:0 0 20px 20px;padding:12px;text-align:center;position:sticky;top:0;z-index:10;box-shadow:0 4px 10px #0003}
 h1{margin:0;font-size:30px}.stats{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.profileStats{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:8px}
 .pill{background:#eee;border-radius:20px;padding:5px 10px;font-weight:bold;font-size:13px}
 @media (max-width:430px){.top{padding:7px 6px 6px;border-radius:0 0 14px 14px}.top h1{font-size:19px}.stats{gap:4px;margin-top:4px}.pill{font-size:11px;padding:3px 7px;border-radius:14px}}
 .screen{display:none;padding:12px;max-width:560px;margin:auto}.screen.active{display:block}
@@ -63,10 +64,8 @@ body.shader-gold{background:linear-gradient(180deg,#FFD700,#FFFF00)!important} b
 <div class="top"><h1>🐦 PigeonTube MEGA V21</h1><div class="stats">
 <span class="pill">🪙 <span id="sCoins">0</span></span><span class="pill">👥 <span id="sSubs">0</span></span>
 <span class="pill">👁️ <span id="sViews">0</span></span><span class="pill">⭐ <span id="sPrestige">0</span></span>
-<span class="pill">🏆 <span id="sLeague">Bronze</span></span><span class="pill">📍 <span id="sCity">London</span></span>
+<span class="pill">🏆 <span id="sLeague">Bronze</span></span>
 <span class="pill">❤️ <span id="tdLivesTop">10</span> | 🌊 <span id="tdWaveTop">1</span></span>
-<span class="pill">💎 <span id="sCompletion">0%</span></span><span class="pill">💎 Gems: <span id="sGems">0</span></span>
-<span class="pill">🍞 Rank: <span id="sBreadRank">#8</span></span>
 </div></div><div id="toast"></div><div id="breadBanner"></div>
 <div id="nextWavePopup"><div style="font-size:22px;font-weight:900">🏆 WAVE <span id="nextWaveNum">2</span> CLEARED!</div><div id="nextWaveReward">+ Bonus coins!</div><button onclick="nextWaveGo()">▶️ NEXT WAVE <span id="nextWaveBtnNum">2</span>!</button><div style="font-size:11px;opacity:.9;margin-top:4px">Tap to start — or wait 10s and it slides away</div></div>
 
@@ -193,7 +192,7 @@ function renderShop(){let el=document.getElementById('shopScreen');if(!el)return
 function buyShop(t,c){if(S.coins<c){showToast('Not enough coins!');return}S.coins-=c;S.shop[t]=(S.shop[t]||0)+1;save();playDing();showToast(`Bought ${t}!`);renderAll();renderShop()}
 function renderInbox(){let mc=document.getElementById('mailCount');if(mc)mc.innerText=fmt(S.mail);let ml=document.getElementById('mailLog');if(ml)ml.innerHTML=S.mail>0?`<p>You have ${fmt(S.mail)} mail!</p>`:'<p>No mail yet!</p>';let btn=document.getElementById('mailBtn');if(btn){btn.disabled=S.mail<=0;btn.style.opacity=S.mail<=0?0.5:1}}
 function openMail(){if(_mailBusy)return;_mailBusy=true;setTimeout(()=>{_mailBusy=false},500);if(S.mail<=0){showToast('No mail!');return}let op=S.mail;let c=op*10*(S.prestigeItems?.doubleCoins?2:1)*completionCoinMult();S.coins+=c;questProgress('mail5',op);S.mail=0;save();playDing();fireConfetti();showToast(`Opened ${fmt(op)} mail! +${fmt(c)} coins!`);renderAll();renderInbox()}
-function renderProfile(){let el=document.getElementById('profileInfo');if(el)el.innerHTML=`<p><b>Channel:</b> ${String(S.channel||'Pigeon Star').slice(0,30)}</p><p>${fmt(S.subs)} subs | ${fmt(S.views)} views | ${fmt(S.coins)} coins | ${TD.gems} Gems</p><p>${leagueFor(S.subs).name} | ${S.city} | Pet: ${S.pet.name} Lv.${S.pet.level}</p><p>Completion: ${getCompletion().pct}%</p>`;let cn=document.getElementById('channelName');if(cn)cn.value=S.channel}
+function renderProfile(){let el=document.getElementById('profileInfo');if(el)el.innerHTML=`<p><b>Channel:</b> ${String(S.channel||'Pigeon Star').slice(0,30)}</p><p>${fmt(S.subs)} subs | ${fmt(S.views)} views | ${fmt(S.coins)} coins | ${TD.gems} Gems</p><p>${leagueFor(S.subs).name} | Pet: ${S.pet.name} Lv.${S.pet.level}</p><div class="profileStats"><span class="pill">📍 City: ${S.city}</span><span class="pill">💎 Gems: ${TD.gems}</span><span class="pill">🎁 Completion: ${getCompletion().pct}%</span><span class="pill">🍞 Bread rank: ${getBreadRankText()}</span></div>`;let cn=document.getElementById('channelName');if(cn)cn.value=S.channel}
 function saveName(){let v=(document.getElementById('channelName')?.value||'').trim();S.channel=v? v.slice(0,30) : 'Pigeon Star';save();showToast('Saved!');renderAll();renderBreadLeaderboard()}
 function renderPrestige(){let el=document.getElementById('prestigeInfo');if(!el)return;let can=S.subs>=1e9;el.innerHTML=`Subs: <b>${fmt(S.subs)}</b> / 1B needed<br>Stars: <b>${S.prestige}</b><br>${can?'YOU CAN PRESTIGE!':'Need 1B subs!'}`}
 function doPrestige(){if(S.subs<1e9){showToast('Need 1B subs!');return}hideNextWavePopup();if(TD.interval){clearInterval(TD.interval);TD.interval=null;TD.playing=false;TD.enemies=[]}S.prestige++;let pet=S.pet,items=S.prestigeItems,ch=S.channel,vis=S.visitedCities,bon=S.bonusesClaimed,comp=S.completionClaimed;let gemsKept=TD.gems;let newS=def();S=Object.assign(newS,{prestige:S.prestige,prestigeItems:items,pet:pet,channel:ch,visitedCities:vis,bonusesClaimed:bon,completionClaimed:comp});TD.gems=gemsKept;_lastAutoVideo=Date.now();save();fireConfetti(400);showToast(`PRESTIGED! ${S.prestige} Stars!`);unlockAchievement('Prestige 1!');renderAll();renderCompletion()}
